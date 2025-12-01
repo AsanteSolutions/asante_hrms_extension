@@ -1,0 +1,21 @@
+{
+ "app": "asante_hrms_extension",
+ "creation": "2025-12-01 11:45:26.956868",
+ "docstatus": 0,
+ "doctype": "Desktop Icon",
+ "hidden": 0,
+ "icon": "cable",
+ "icon_type": "Link",
+ "idx": 21,
+ "label": "Clickup Integration",
+ "link_to": "Clickup Integration",
+ "link_type": "DocType",
+ "modified": "2025-12-01 12:02:45.433954",
+ "modified_by": "Administrator",
+ "name": "Clickup Integration",
+ "owner": "Administrator",
+ "parent_icon": "",
+ "roles": [],
+ "sidebar": "",
+ "standard": 1
+}

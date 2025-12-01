@@ -143,23 +143,31 @@ app_license = "mit"
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"asante_hrms_extension.tasks.all"
-# 	],
-# 	"daily": [
-# 		"asante_hrms_extension.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"asante_hrms_extension.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"asante_hrms_extension.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"asante_hrms_extension.tasks.monthly"
-# 	],
-# }
+scheduler_events = {
+	"cron": {
+		"0 18 * * *": [
+			"hrms.hr.doctype.daily_work_summary_group.daily_work_summary_group.send_summary",
+		],
+		"0/5 * * * *": [
+			"asante_hrms_extension.api_integrations.doctype.clickup_integration.clickup_integration.update_projects_from_clickup" 
+		],
+	},
+	# "all": [
+	# 	"asante_hrms_extension.tasks.all"
+	# ],
+	# "daily": [
+	# 	"asante_hrms_extension.tasks.daily"
+	# ],
+	# "hourly": [
+	# 	"asante_hrms_extension.tasks.hourly"
+	# ],
+	# "weekly": [
+	# 	"asante_hrms_extension.tasks.weekly"
+	# ],
+	# "monthly": [
+	# 	"asante_hrms_extension.tasks.monthly"
+	# ],
+}
 
 # Testing
 # -------
