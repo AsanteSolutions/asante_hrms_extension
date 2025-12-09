@@ -2,15 +2,20 @@
 # For license information, please see license.txt
 
 import frappe
-import requests
 from frappe.model.document import Document
+from pyrate_limiter import Duration, Limiter, RedisBucket, RequestRate
+from requests_ratelimiter import LimiterSession
 
+rate = RequestRate(100, Duration.MINUTE * 5)
+limiter = Limiter(rate)
+session = LimiterSession(limiter=limiter, bucket_class=RedisBucket)
 
 class ClickupIntegration(Document):
 	pass
 
-def update_projects_from_clickup():
+def update_projects_from_clickup() -> None:
 	doc = frappe.get_doc('Clickup Integration')
+	headers = {}
 
 	if doc.api_key or doc.access_token:
 		if doc.api_key:
@@ -24,15 +29,28 @@ def update_projects_from_clickup():
 				"Authorization": f"Bearer {doc.get_password('access_token')}"
 			}
 
-		url = f"https://api.clickup.com/api/v2/space/{doc.space_id}/folder"
+		url = f"https://api.clickup.com/api/v2/team/{doc.workspace_id}/space"
 
 		try:
-			response = requests.get(url, headers=headers)
+			response = session.get(url, headers=headers)
 
 			response.raise_for_status()
 
-			respone_json = response.json()
-			clickup_folders = respone_json.get('folders')
+			response_json = response.json()
+			spaces = response_json.get('spaces')
+
+			clickup_folders = []
+			for space in spaces:
+				url = f"https://api.clickup.com/api/v2/space/{space.get('id')}/folder"
+
+				response = session.get(url, headers=headers)
+
+				response.raise_for_status()
+
+				response_json = response.json()
+				clickup_folders = clickup_folders + response_json.get('folders')
+
+
 			project_list = frappe.get_list('Project', fields=['name', 'custom_clickup_id'])
 
 			for folder in clickup_folders:
@@ -48,7 +66,8 @@ def update_projects_from_clickup():
 			delete_projects(project_list, clickup_folders)
 
 		except Exception as e:
-			doc.log_error(title="Bad response from Clickup request", message=str(e))
+			doc.log_error(title="Bad response from ClickUp request", message=str(e))
+
 
 
 def create_project(folder):

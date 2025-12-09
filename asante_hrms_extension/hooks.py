@@ -149,7 +149,7 @@ scheduler_events = {
 			"hrms.hr.doctype.daily_work_summary_group.daily_work_summary_group.send_summary",
 		],
 		"0/5 * * * *": [
-			"asante_hrms_extension.api_integrations.doctype.clickup_integration.clickup_integration.update_projects_from_clickup" 
+			"asante_hrms_extension.api_integrations.doctype.clickup_integration.clickup_integration.update_projects_from_clickup",
 		],
 	},
 	# "all": [

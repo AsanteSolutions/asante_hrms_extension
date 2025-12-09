@@ -7,7 +7,7 @@
  "document_type": "Setup",
  "engine": "InnoDB",
  "field_order": [
-  "space_id",
+  "workspace_id",
   "api_key",
   "access_token",
   "get_access_token"
@@ -29,16 +29,16 @@
    "label": "Get Access Token"
   },
   {
-   "fieldname": "space_id",
+   "fieldname": "workspace_id",
    "fieldtype": "Data",
-   "label": "Space ID"
+   "label": "Workspace ID"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-12-01 14:04:03.903440",
+ "modified": "2025-12-08 09:11:42.760872",
  "modified_by": "Administrator",
  "module": "API Integrations",
  "name": "Clickup Integration",
